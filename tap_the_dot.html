@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tap the Dot</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+    }
+    #board {
+      position: relative;
+      margin: 0 auto;
+      width: 300px;
+      height: 300px;
+      border: 2px solid #333;
+      background: #f3f3f3;
+    }
+    .dot {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e63946;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tap the Dot!</h1>
+  <p>Score: <span id="score">0</span></p>
+  <div id="board"></div>
+  <script>
+    const board = document.getElementById('board');
+    const scoreSpan = document.getElementById('score');
+    let score = 0;
+
+    function spawnDot() {
+      const existing = document.querySelector('.dot');
+      if (existing) existing.remove();
+
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+
+      const x = Math.random() * (board.offsetWidth - 40);
+      const y = Math.random() * (board.offsetHeight - 40);
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+
+      dot.addEventListener('touchstart', tapDot);
+      dot.addEventListener('click', tapDot);
+
+      board.appendChild(dot);
+    }
+
+    function tapDot() {
+      score++;
+      scoreSpan.textContent = score;
+      spawnDot();
+    }
+
+    spawnDot();
+  </script>
+</body>
+</html>
